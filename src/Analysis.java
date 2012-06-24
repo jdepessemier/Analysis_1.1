@@ -31,8 +31,7 @@ public class Analysis {
 		// secondary root
 		
 		String root = "C:";
-		String workDir = "W_2012_05_14";
-		//String workDir = "W_2011_All_In_One";
+		String workDir = "W_2012_06_24";
 		Double minLateralRootLength = 0.1;
 		
 		// Setup the working directories inside the main directory
@@ -93,8 +92,8 @@ public class Analysis {
 			try {
 				sheet.addCell(new Label(0, 0, "Accession", headerInformationFormat));
 				sheet.addCell(new Label(1, 0, "Concentration", headerInformationFormat));
-				sheet.addCell(new Label(2, 0, "Box  ", headerInformationFormat));
-				sheet.addCell(new Label(3, 0, "Nb of Plants", headerInformationFormat));
+				sheet.addCell(new Label(2, 0, "Day", headerInformationFormat));
+				sheet.addCell(new Label(3, 0, "Box  ", headerInformationFormat));
 				sheet.addCell(new Label(4, 0, "MRL   ", headerInformationFormat));
 				sheet.addCell(new Label(5, 0, "NLR   ", headerInformationFormat));		
 				sheet.addCell(new Label(6, 0, "LRL   ", headerInformationFormat));
@@ -112,41 +111,17 @@ public class Analysis {
 				int offset = 1; 
 				for (int j = 0; j < accessionsList.size(); j++ ){
 					offset = offset + delta;
-					sheet.addCell(new Label(0, j+offset, accessionsList.get(j).getName(), InformationFormat));
-					sheet.addCell(new Label(1, j+offset, accessionsList.get(j).getConcentration(), InformationFormat));
-					sheet.addCell(new Label(2, j+offset, accessionsList.get(j).getBox(), InformationFormat));
-					sheet.addCell(new Number(3, j+offset,accessionsList.get(j).getNbOfPlants(),intg ));
-					sheet.addCell(new Number(4, j+offset,accessionsList.get(j).getMRL(0),cf2 ));
-					sheet.addCell(new Number(5, j+offset,accessionsList.get(j).getNLR(0),cf2 ));
-					sheet.addCell(new Number(6, j+offset,accessionsList.get(j).getSLRL(0),cf2 ));
-					sheet.addCell(new Number(7, j+offset,accessionsList.get(j).getRD(0),cf2 ));
-					
-				    for (int l = 1; l < accessionsList.get(j).getNbOfPlants(); l++ ){
-						sheet.addCell(new Number(4, l+j+offset,accessionsList.get(j).getMRL(l),cf2 ));
-						sheet.addCell(new Number(5, l+j+offset,accessionsList.get(j).getNLR(l),cf2 ));
-						sheet.addCell(new Number(6, l+j+offset,accessionsList.get(j).getSLRL(l),cf2 ));
-						sheet.addCell(new Number(7, l+j+offset,accessionsList.get(j).getRD(l),cf2 ));	    	
-				    }
-							    
-					sheet.addCell(new Label(3, j+accessionsList.get(j).getNbOfPlants()+offset, "MEAN", InformationFormat));
-					sheet.addCell(new Number(4, j+accessionsList.get(j).getNbOfPlants()+offset,accessionsList.get(j).getMRLmean(),cf2 ));
-					sheet.addCell(new Number(5, j+accessionsList.get(j).getNbOfPlants()+offset,accessionsList.get(j).getNLRmean(),cf2 ));
-					sheet.addCell(new Number(6, j+accessionsList.get(j).getNbOfPlants()+offset,accessionsList.get(j).getSLRLmean(),cf2 ));
-					sheet.addCell(new Number(7, j+accessionsList.get(j).getNbOfPlants()+offset,accessionsList.get(j).getRDmean(),cf2 ));
-			
-					sheet.addCell(new Label(3, j+accessionsList.get(j).getNbOfPlants()+offset+1, "SD", InformationFormat));
-					sheet.addCell(new Number(4, j+accessionsList.get(j).getNbOfPlants()+offset+1,accessionsList.get(j).getMRLsd(),cf2 ));
-					sheet.addCell(new Number(5, j+accessionsList.get(j).getNbOfPlants()+offset+1,accessionsList.get(j).getNLRsd(),cf2 ));
-					sheet.addCell(new Number(6, j+accessionsList.get(j).getNbOfPlants()+offset+1,accessionsList.get(j).getSLRLsd(),cf2 ));
-					sheet.addCell(new Number(7, j+accessionsList.get(j).getNbOfPlants()+offset+1,accessionsList.get(j).getRDsd(),cf2 ));
-				
-					sheet.addCell(new Label(3, j+accessionsList.get(j).getNbOfPlants()+offset+2, "SE", InformationFormat));
-					sheet.addCell(new Number(4, j+accessionsList.get(j).getNbOfPlants()+offset+2, accessionsList.get(j).getMRLse(),cf2 ));
-					sheet.addCell(new Number(5, j+accessionsList.get(j).getNbOfPlants()+offset+2, accessionsList.get(j).getNLRse(),cf2 ));
-					sheet.addCell(new Number(6, j+accessionsList.get(j).getNbOfPlants()+offset+2, accessionsList.get(j).getSLRLse(),cf2 ));
-					sheet.addCell(new Number(7, j+accessionsList.get(j).getNbOfPlants()+offset+2, accessionsList.get(j).getRDse(),cf2 ));
-				
-					delta = accessionsList.get(j).getNbOfPlants() + 2;
+					for (int l = 0; l < accessionsList.get(j).getNbOfPlants(); l++ ){
+						sheet.addCell(new Label(0, l+offset, accessionsList.get(j).getName(), InformationFormat));
+						sheet.addCell(new Label(1, l+offset, accessionsList.get(j).getConcentration(), InformationFormat));
+						sheet.addCell(new Label(3, l+offset, accessionsList.get(j).getBox(), InformationFormat));
+						sheet.addCell(new Number(4, l+offset,accessionsList.get(j).getMRL(l),cf2 ));
+						sheet.addCell(new Number(5, l+offset,accessionsList.get(j).getNLR(l),cf2 ));
+						sheet.addCell(new Number(6, l+offset,accessionsList.get(j).getSLRL(l),cf2 ));
+						sheet.addCell(new Number(7, l+offset,accessionsList.get(j).getRD(l),cf2 ));	
+					}
+																	    				
+					delta = accessionsList.get(j).getNbOfPlants();
 				}
 				
 				int c = sheet.getColumns();
@@ -215,9 +190,12 @@ public class Analysis {
 		
 		// variables to store the accessions data
 		String fileName;
-		String experimentName;
-		String boxName;
-		int nbOfPlants;
+		String userName; // should be empty
+		String experimentName; // should be empty
+		String boxName; // should contain a letter for the box name
+		String genotype; // used to store the accession name
+		String media; // used to store the concentration
+		int nbOfPlants; // self explanatory
 
 	    Accession currentAccession = new Accession();
 	    Accession parsedAccession = new Accession();
@@ -229,51 +207,28 @@ public class Analysis {
 		    
 		    while (dis.available() != 0) {
 		    	
-		    	// Get the accession file name, we only take the text before the .bmp
 		    	String line = dis.readLine();
-		    	//System.out.println(line);
-			    
-			    // skip line with user name
-			    dis.readLine();
-			    
-			    // Get the accession experiment name
+		    	fileName = getStringLineItem(line,1,";");
+		    	
 			    line = dis.readLine();
-			    //System.out.println(line);
-			    experimentName = getStringLineItem(line,1,";");
-			    //System.out.println(experimentName);
-			    			    
-			    String str1 = experimentName;
-			    //System.out.println(str1);
-			    String str11 = str1.replace(" ", ";");
-			    //System.out.println(str11);
-		    	String[] fields11 = str11.split(";");
-		    	
-		    	String currentAccessionName;
-		    	String currentConcentration;
-		    	String currentBox;
-		    	
-		    	//System.out.println(fields11.length);
-		    	
-		    	if (fields11.length == 3){
-		    		currentAccessionName = fields11[0].toUpperCase();
-		    		currentConcentration = fields11[1];
-		    		currentBox = fields11[2].toUpperCase();
-		    	} else {
-		    		currentAccessionName = fields11[0].toUpperCase()+" "+fields11[1].toUpperCase();
-		    		currentConcentration = fields11[2];
-		    		currentBox = fields11[3].toUpperCase();
-		    	}
-		    	currentAccession.setName(currentAccessionName);
-		    	currentAccession.setConcentration(currentConcentration);
-		    	currentAccession.setBox(currentBox);
+			    userName = getStringLineItem(line,1,";");
 			    
-			    // Get the accession box name
+			    line = dis.readLine();
+			    experimentName = getStringLineItem(line,1,";");
+		    			    				    
 			    line = dis.readLine();
 			    boxName = getStringLineItem(line,1,";");
+			    currentAccession.setBox(boxName);
 			     
-			    // skip lines with Genotype,Media, Age of Plants
-			    dis.readLine();
-			    dis.readLine();
+			    line = dis.readLine();
+			    genotype = getStringLineItem(line,1,";");
+			    currentAccession.setName(genotype);
+
+			    line = dis.readLine();
+			    media = getStringLineItem(line,1,";");
+			    currentAccession.setConcentration(media);
+			    
+			    // skip lines with Age of Plants
 			    dis.readLine();
 			    
 			    // Get the accession number of plants
@@ -429,8 +384,9 @@ public class Analysis {
 			    // write the output file		    
 			    parsedAccession = writeFile(currentAccession,
 			    							outputfilename,
-			    		  				    experimentName,
 			    		  				    boxName,
+			    		  				    genotype,
+			    		  				    media,
 			    		  				    nbOfPlants,
 			    		  				    mainRootLength,
 			    		  				    nbOfLateralRoots,
@@ -453,8 +409,9 @@ public class Analysis {
 	
 	private static Accession writeFile(Accession parsedaccession,
 			                           String outputfilename,
-							 	  	   String experimentname,
 							 	  	   String boxname,
+							 	  	   String genotype,
+							 	  	   String media,
 							 	  	   int nbofplants,
 							 	  	   Double[] mainrootlength,
 							 	  	   int[] nboflateralroots,
@@ -464,8 +421,9 @@ public class Analysis {
 	    FileWriter f1 = new FileWriter(outputfilename);
 	    
 	    // Write first line with the columns titles
-	    String source = "Experiment Name"+";"+
+	    String source = "Accession Name"+";"+
 	    				"Box Name"+";"+
+	    				"Concentration"+";"+
 	    				"Nb of Plants"+";"+
 	    				"Main Root Length"+";"+";"+
 	    				"Nb of Lateral Roots"+";"+";"+
@@ -473,10 +431,11 @@ public class Analysis {
 						"Roots Density"+"\r\n";	    
 	    f1.write(source);
 	    
-	    // Write the second line, for this line we write the file name, the experiment name, 
-	    // the box name and the number of plants. This will not repeated for the next plants.
-	    source = experimentname+";"+
+	    // Write the second line, for this line we write the accession name, the box name, 
+	    // the concentration and the number of plants. This will not be repeated for the next plants.
+	    source = genotype+";"+
 	    		 boxname+";"+
+	    		 media+";"+
 	    		 nbofplants+";"+
 	    		 roundDouble(mainrootlength[0],"#.##")+";"+";"+
 	    		 nboflateralroots[0]+";"+";"+
@@ -490,7 +449,7 @@ public class Analysis {
 	    // we will now write the following lines based on the number of plants
 	    for (int l = 1; l < nbofplants; l++ ){
 	    	
-	    	source = ";"+";"+";"+
+	    	source = ";"+";"+";"+";"+
 					 roundDouble(mainrootlength[l],"#.##")+";"+";"+
 					 nboflateralroots[l]+";"+";"+
 					 roundDouble(sumoflatrootslength[l],"#.##")+";"+";"+
@@ -532,7 +491,7 @@ public class Analysis {
 	    parsedaccession.setRDse(rootsDensitySE);
 	    
 	    // Write the line with the different mean values
-	    source = ";"+";"+"Mean;"+
+	    source = ";"+";"+";"+"Mean;"+
 	    		 roundDouble(mainRootLengthMean,"#.##")+";"+";"+
 	    		 roundDouble(nbOfLateralRootsMean,"#.##")+";"+";"+
 	    		 roundDouble(sumOfLatRootsLengthMean,"#.##")+";"+";"+
@@ -542,7 +501,7 @@ public class Analysis {
 	    f1.write(newSource);
 
 	    // Write the line with the different standard deviations
-	    source = ";"+";"+"SD;"+
+	    source = ";"+";"+";"+"SD;"+
 		 		 roundDouble(mainRootLengthSD,"#.##")+";"+";"+
 		 		 roundDouble(nbOfLateralRootsSD,"#.##")+";"+";"+
 		 		 roundDouble(sumOfLatRootsLengthSD,"#.##")+";"+";"+
@@ -552,7 +511,7 @@ public class Analysis {
 	    f1.write(newSource);
 
 	    // Write the line with the different standard errors
-	    source = ";"+";"+"SE;"+
+	    source = ";"+";"+";"+"SE;"+
 		 		 roundDouble(mainRootLengthSE,"#.##")+";"+";"+
 		 		 roundDouble(nbOfLateralRootsSE,"#.##")+";"+";"+
 		 		 roundDouble(sumOfLatRootsLengthSE,"#.##")+";"+";"+
@@ -565,8 +524,6 @@ public class Analysis {
 	    
 	    return parsedaccession;
 	}
-
-
 	
     private static String getStringLineItem(String line, int index, String patternstr) {
     	
