@@ -31,7 +31,7 @@ public class Analysis {
 		// secondary root
 		
 		String root = "C:";
-		String workDir = "W_2012_09_19";
+		String workDir = "W_2012_03_08";
 		Double minLateralRootLength = 0.1;
 		
 		// Setup the working directories inside the main directory
