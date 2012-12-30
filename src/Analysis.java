@@ -681,8 +681,6 @@ public class Analysis {
     return Math.sqrt( sum / ( n - 1 ) );
     }
 
-
-    
     static Double[] moveToArray(Double value1, Double value2, Double value3, Double value4) {
     	
     	// Moves the 4 Doubles received as input into one array
@@ -713,6 +711,5 @@ public class Analysis {
         return myArray;
     }
     
-
 }
 
