@@ -31,7 +31,7 @@ public class Analysis {
 		// secondary root
 		
 		String root = "C:";
-		String workDir = "W_2012_03_08";
+		String workDir = "W_2013_03_09";
 		Double minLateralRootLength = 0.1;
 		
 		// Setup the working directories inside the main directory
@@ -59,8 +59,8 @@ public class Analysis {
 			    //System.out.println(accession);
 			    
 			    // Build the different file names
-			    String inputFileName = inputDir+accession+".bmp.txt";
-			    //String inputFileName = inputDir+accession+".txt";
+			    //String inputFileName = inputDir+accession+".bmp.txt";
+			    String inputFileName = inputDir+accession+".txt";
 				String cleanupFileName = cleanupDir+accession+".txt";
 				String outputFileName = outputDir+accession+".csv";
 				
@@ -222,10 +222,14 @@ public class Analysis {
 			     
 			    line = dis.readLine();
 			    genotype = getStringLineItem(line,1,";");
+			
 			    currentAccession.setName(genotype);
 
 			    line = dis.readLine();
 			    media = getStringLineItem(line,1,";");
+			    if (media.equals("10uM")) {
+			    	media = "10µM";
+			    }
 			    currentAccession.setConcentration(media);
 			    
 			    // skip lines with Age of Plants
